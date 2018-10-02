@@ -1,0 +1,94 @@
+load(":toolchain.bzl", "pandoc_toolchain")
+load(":pandoc.bzl", "pandoc")
+
+# Precompiled Pandoc binaries provided by upstream.
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@bazel_tools//platforms:linux",
+        "@bazel_tools//platforms:x86_64",
+    ],
+    platform = "linux",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@bazel_tools//platforms:osx",
+        "@bazel_tools//platforms:x86_64",
+    ],
+    platform = "macOS",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@bazel_tools//platforms:windows",
+        "@bazel_tools//platforms:x86_32",
+    ],
+    platform = "windows-i386",
+)
+
+pandoc_toolchain(
+    exec_compatible_with = [
+        "@bazel_tools//platforms:windows",
+        "@bazel_tools//platforms:x86_64",
+    ],
+    platform = "windows-x86_64",
+)
+
+# Conversion of README to various formats for testing.
+
+[pandoc(
+    name = "readme_" + fmt,
+    src = "README.md",
+    from_format = "markdown",
+    to_format = fmt,
+) for fmt in [
+    "asciidoc",
+    "beamer",
+    "commonmark",
+    "context",
+    "docbook",
+    "docbook4",
+    "docbook5",
+    "docx",
+    "dokuwiki",
+    "dzslides",
+    "epub",
+    "epub2",
+    "epub3",
+    "fb2",
+    "haddock",
+    "html",
+    "html4",
+    "html5",
+    "icml",
+    "jats",
+    "json",
+    "latex",
+    "man",
+    "markdown",
+    "markdown_github",
+    "markdown_mmd",
+    "markdown_phpextra",
+    "markdown_strict",
+    "mediawiki",
+    "ms",
+    "muse",
+    "native",
+    "odt",
+    "opendocument",
+    "opml",
+    "org",
+    "plain",
+    "pptx",
+    "revealjs",
+    "rst",
+    "rtf",
+    "s5",
+    "slideous",
+    "slidy",
+    "tei",
+    "texinfo",
+    "textile",
+    "zimwiki",
+]]
