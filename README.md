@@ -40,3 +40,15 @@ pandoc(
 In the example above, an output file called `foo.tex` will be created in
 the `bazel-bin` directory. The `to_format` field is used to
 automatically derive a file extension of the output file.
+
+# Platform support
+
+These rules have been tested to work on:
+
+- macOS Mojave 10.14, building locally.
+- Ubuntu 18.04, building locally.
+- Ubuntu 18.04, building on a Debian 9 based
+  [Buildbarn](https://github.com/EdSchouten/bazel-buildbarn) setup.
+- Windows 10 1803, building locally.
+- Windows 10 1803, building on a Debian 9 based
+  [Buildbarn](https://github.com/EdSchouten/bazel-buildbarn) setup.
