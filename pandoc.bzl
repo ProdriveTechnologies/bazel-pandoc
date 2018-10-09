@@ -1,6 +1,7 @@
 def _pandoc_impl(ctx):
     toolchain = ctx.toolchains["@bazel_pandoc//:pandoc_toolchain_type"]
     ctx.actions.run(
+        mnemonic = "Pandoc",
         executable = toolchain.pandoc.files.to_list()[0].path,
         arguments = ctx.attr.options + [
             "--from",
