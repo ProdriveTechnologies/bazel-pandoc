@@ -42,6 +42,8 @@ pandoc_toolchain(
     src = "README.md",
     from_format = "markdown",
     to_format = fmt,
+    # TODO(regisd) Infer extension from to_format
+    output = "readme_" + fmt + "." + fmt,
 ) for fmt in [
     "asciidoc",
     "beamer",
