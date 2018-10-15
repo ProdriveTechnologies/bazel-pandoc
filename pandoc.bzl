@@ -9,7 +9,7 @@ def _pandoc_impl(ctx):
     cli_args.extend(["-o", ctx.outputs.output.path])
     cli_args.append(ctx.file.src.path)
 
-    print("args=" + str(cli_args))
+    # print("args=" + str(cli_args))
     ctx.actions.run(
         mnemonic = "Pandoc",
         executable = toolchain.pandoc.files.to_list()[0].path,
