@@ -3,6 +3,11 @@ load(":pandoc.bzl", "pandoc")
 
 # Precompiled Pandoc binaries provided by upstream.
 
+toolchain_type(
+    name = "pandoc_toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
 pandoc_toolchain(
     exec_compatible_with = [
         "@bazel_tools//platforms:linux",
