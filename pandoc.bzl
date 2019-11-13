@@ -1,5 +1,4 @@
-# Map of format ->  receommended extension.
-FORMAT_EXTENSIONS = {
+PANDOC_EXTENSIONS = {
     "asciidoc": "adoc",
     "beamer": "tex",
     "commonmark": "md",
@@ -50,9 +49,6 @@ FORMAT_EXTENSIONS = {
     "zimwiki": "txt",
 }
 
-# Formats know to pandoc.
-PANDOC_FORMATS = FORMAT_EXTENSIONS.keys()
-
 def _pandoc_impl(ctx):
     toolchain = ctx.toolchains["@bazel_pandoc//:pandoc_toolchain_type"]
     ctx.actions.run(
@@ -89,7 +85,7 @@ def pandoc(**kwargs):
     # Use the generic .xml syntax for XML-based formats and .txt for
     # ones with no commonly used extension.
     to_format = kwargs["to_format"]
-    if to_format not in FORMAT_EXTENSIONS:
+    if to_format not in PANDOC_EXTENSIONS:
         fail("Unknown output format: " + to_format)
 
-    _pandoc(extension = FORMAT_EXTENSIONS[to_format], **kwargs)
+    _pandoc(extension = PANDOC_EXTENSIONS[to_format], **kwargs)

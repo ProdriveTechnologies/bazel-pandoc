@@ -9,12 +9,13 @@ depend on the official release binaries provided by the Pandoc project.
 
 # Using these rules
 
+## Set up your workspace
+
 Add the following to your `WORKSPACE` file:
 
 ```python
 http_archive(
     name = "bazel_pandoc",
-    sha256 = "<checksum>",
     strip_prefix = "bazel-pandoc-<release>",
     url = "https://github.com/ProdriveTechnologies/bazel-pandoc/archive/v<release>.tar.gz",
 )
@@ -23,6 +24,8 @@ load("@bazel_pandoc//:repositories.bzl", "pandoc_repositories")
 
 pandoc_repositories()
 ```
+
+## Use the `pandoc` rule in BUILD files
 
 You can then add directives along these lines to your `BUILD.bazel` files:
 

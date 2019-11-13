@@ -1,0 +1,10 @@
+load("//:pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
+
+# Conversion of README to various formats for testing.
+
+[pandoc(
+    name = "readme_" + fmt,
+    src = "//:README.md",
+    from_format = "markdown",
+    to_format = fmt,
+) for fmt in PANDOC_EXTENSIONS.keys()]
