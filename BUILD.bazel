@@ -1,5 +1,5 @@
 load(":toolchain.bzl", "pandoc_toolchain")
-load(":pandoc.bzl", "pandoc", "PANDOC_FORMATS")
+load(":pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
 
 exports_files(["README.md"])
 
