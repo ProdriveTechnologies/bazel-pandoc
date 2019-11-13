@@ -9,6 +9,8 @@ depend on the official release binaries provided by the Pandoc project.
 
 # Using these rules
 
+Please see the sample folder for an example of how bazel-pandoc could be used.
+
 ## Set up your workspace
 
 Add the following to your `WORKSPACE` file:
