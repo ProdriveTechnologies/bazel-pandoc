@@ -1,4 +1,8 @@
 container:
     image: l.gcr.io/google/bazel:latest
 task:
+    name: Main build
     build_script: bazel build //...
+task:
+    name: Sample build
+    build_script: bazel build @bazel_pandoc//sample/... 
