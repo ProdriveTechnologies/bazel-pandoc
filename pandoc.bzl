@@ -63,7 +63,10 @@ def _pandoc_impl(ctx):
             ctx.outputs.out.path,
             ctx.files.src[0].path,
         ],
-        inputs = toolchain.pandoc.files + ctx.files.src,
+        inputs = depset(
+            direct = ctx.files.src,
+            transitive = [toolchain.pandoc.files],
+        ),
         outputs = [ctx.outputs.out],
     )
 
