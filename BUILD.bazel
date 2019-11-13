@@ -1,9 +1,14 @@
 load(":toolchain.bzl", "pandoc_toolchain")
-load(":pandoc.bzl", "pandoc")
+load(":pandoc.bzl", "pandoc", "PANDOC_FORMATS")
 
 exports_files(["README.md"])
 
 # Precompiled Pandoc binaries provided by upstream.
+
+toolchain_type(
+    name = "pandoc_toolchain_type",
+    visibility = ["//visibility:public"],
+)
 
 pandoc_toolchain(
     exec_compatible_with = [
