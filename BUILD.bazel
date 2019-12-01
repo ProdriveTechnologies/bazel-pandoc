@@ -1,7 +1,14 @@
 load(":toolchain.bzl", "pandoc_toolchain")
-load(":pandoc.bzl", "pandoc")
+load(":pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
+
+exports_files(["README.md"])
 
 # Precompiled Pandoc binaries provided by upstream.
+
+toolchain_type(
+    name = "pandoc_toolchain_type",
+    visibility = ["//visibility:public"],
+)
 
 pandoc_toolchain(
     exec_compatible_with = [
@@ -34,63 +41,3 @@ pandoc_toolchain(
     ],
     platform = "windows-x86_64",
 )
-
-# Conversion of README to various formats for testing.
-
-[pandoc(
-    name = "readme_" + fmt,
-    src = "README.md",
-    from_format = "markdown",
-    to_format = fmt,
-    # TODO(regisd) Infer extension from to_format
-    output = "readme_" + fmt + "." + fmt,
-) for fmt in [
-    "asciidoc",
-    "beamer",
-    "commonmark",
-    "context",
-    "docbook",
-    "docbook4",
-    "docbook5",
-    "docx",
-    "dokuwiki",
-    "dzslides",
-    "epub",
-    "epub2",
-    "epub3",
-    "fb2",
-    "haddock",
-    "html",
-    "html4",
-    "html5",
-    "icml",
-    "jats",
-    "json",
-    "latex",
-    "man",
-    "markdown",
-    "markdown_github",
-    "markdown_mmd",
-    "markdown_phpextra",
-    "markdown_strict",
-    "mediawiki",
-    "ms",
-    "muse",
-    "native",
-    "odt",
-    "opendocument",
-    "opml",
-    "org",
-    "plain",
-    "pptx",
-    "revealjs",
-    "rst",
-    "rtf",
-    "s5",
-    "slideous",
-    "slidy",
-    "tei",
-    "texinfo",
-    "textile",
-    "zimwiki",
-]]
