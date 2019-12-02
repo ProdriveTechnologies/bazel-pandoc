@@ -46,7 +46,7 @@ pandoc(
 In the example above, an output file called `awesome_doc.tex` will be created
 in the `bazel-bin` directory.
 
-At least one of the `to_format` or `output`attributes must be provided.
+At least one of the `to_format` or `output` attributes must be provided.
 
 # Platform support
 

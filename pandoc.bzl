@@ -48,7 +48,6 @@ PANDOC_EXTENSIONS = {
     "textile": "textile",
     "zimwiki": "txt",
 }
-PANDOC_FORMATS = PANDOC_EXTENSIONS.keys()
 
 def _pandoc_impl(ctx):
     toolchain = ctx.toolchains["@bazel_pandoc//:pandoc_toolchain_type"]
@@ -59,7 +58,7 @@ def _pandoc_impl(ctx):
     if ctx.attr.to_format:
         cli_args.extend(["--to", ctx.attr.to_format])
     cli_args.extend(["-o", ctx.outputs.output.path])
-    cli_args.extend([ctx.files.src[0].path])
+    cli_args.extend([ctx.file.src.path])
     ctx.actions.run(
         mnemonic = "Pandoc",
         executable = toolchain.pandoc.files.to_list()[0].path,
