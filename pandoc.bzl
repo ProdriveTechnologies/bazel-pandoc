@@ -48,47 +48,60 @@ PANDOC_EXTENSIONS = {
     "textile": "textile",
     "zimwiki": "txt",
 }
+PANDOC_FORMATS = PANDOC_EXTENSIONS.keys()
 
 def _pandoc_impl(ctx):
     toolchain = ctx.toolchains["@bazel_pandoc//:pandoc_toolchain_type"]
+    cli_args = []
+    cli_args.extend(ctx.attr.options)
+    if ctx.attr.from_format:
+        cli_args.extend(["--from", ctx.attr.from_format])
+    if ctx.attr.to_format:
+        cli_args.extend(["--to", ctx.attr.to_format])
+    cli_args.extend(["-o", ctx.outputs.output.path])
+    cli_args.extend([ctx.files.src[0].path])
     ctx.actions.run(
         mnemonic = "Pandoc",
         executable = toolchain.pandoc.files.to_list()[0].path,
-        arguments = ctx.attr.options + [
-            "--from",
-            ctx.attr.from_format,
-            "--to",
-            ctx.attr.to_format,
-            "-o",
-            ctx.outputs.out.path,
-            ctx.files.src[0].path,
-        ],
+        arguments = cli_args,
         inputs = depset(
             direct = ctx.files.src,
             transitive = [toolchain.pandoc.files],
         ),
-        outputs = [ctx.outputs.out],
+        outputs = [ctx.outputs.output],
     )
 
 _pandoc = rule(
     attrs = {
-        "extension": attr.string(),
         "from_format": attr.string(),
         "options": attr.string_list(),
         "src": attr.label(allow_files = True),
         "to_format": attr.string(),
+        "output": attr.output(mandatory = True),
     },
-    outputs = {"out": "%{name}.%{extension}"},
     toolchains = ["@bazel_pandoc//:pandoc_toolchain_type"],
     implementation = _pandoc_impl,
 )
 
-def pandoc(**kwargs):
-    # Derive extension of the output file based on the desired format.
-    # Use the generic .xml syntax for XML-based formats and .txt for
-    # ones with no commonly used extension.
-    to_format = kwargs["to_format"]
-    if to_format not in PANDOC_EXTENSIONS:
-        fail("Unknown output format: " + to_format)
+def _check_format(format, attr_name):
+    if format not in PANDOC_EXTENSIONS:
+        fail("Unknown %{attr} format: %{format}".fmt(attr = attr_name, format = format))
+    return format
 
-    _pandoc(extension = PANDOC_EXTENSIONS[to_format], **kwargs)
+def _infer_output(name, to_format):
+    """Derives output file based on the desired format.
+
+    Use the generic .xml syntax for XML-based formats and .txt for
+    ones with no commonly used extension.
+    """
+    to_format = _check_format(to_format, "to_format")
+    ext = PANDOC_EXTENSIONS[to_format]
+    return name + "." + ext
+
+def pandoc(**kwargs):
+    if "from_format" in kwargs:
+        _check_format(kwargs["from_format"], "from_format")
+    if "output" not in kwargs:
+        to_format = _check_format(kwargs["to_format"], "to_format")
+        kwargs["output"] = _infer_output(kwargs["name"], to_format)
+    _pandoc(**kwargs)

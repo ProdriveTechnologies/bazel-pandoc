@@ -1,7 +1,20 @@
 load("//:pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
 
-# Conversion of README to various formats for testing.
+# Simplest possible example, where the to_format is specified
+pandoc(
+    name = "readme1",
+    src = "//:README.md",
+    to_format = "asciidoc",
+)
 
+# Simplest possible example, where the output is specified
+pandoc(
+    name = "readme2",
+    src = "//:README.md",
+    output = "readme2.html",
+)
+
+# Conversion of README to various formats for testing.
 [pandoc(
     name = "readme_" + fmt,
     src = "//:README.md",
