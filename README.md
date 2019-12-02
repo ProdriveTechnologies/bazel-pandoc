@@ -35,16 +35,18 @@ You can then add directives along these lines to your `BUILD.bazel` files:
 load("@bazel_pandoc//:pandoc.bzl", "pandoc")
 
 pandoc(
-    name = "foo",
-    src = "foo.md",
-    from_format = "markdown",
-    to_format = "latex",
+    name = "foo",                # required
+    src = "foo.md",              # required
+    from_format = "markdown",    # optional, inferred from src extension by default
+    to_format = "latex",         # optional, inferred from output extension by default
+    output = "awesome_doc.tex",  # optional, derived from name and to_format by default
 )
 ```
 
-In the example above, an output file called `foo.tex` will be created in
-the `bazel-bin` directory. The `to_format` field is used to
-automatically derive a file extension of the output file.
+In the example above, an output file called `awesome_doc.tex` will be created
+in the `bazel-bin` directory.
+
+At least one of the `to_format` or `output`attributes must be provided.
 
 # Platform support
 

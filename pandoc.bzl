@@ -85,7 +85,7 @@ _pandoc = rule(
 
 def _check_format(format, attr_name):
     if format not in PANDOC_EXTENSIONS:
-        fail("Unknown %{attr} format: %{format}".fmt(attr = attr_name, format = format))
+        fail("Unknown `%{attr}` format: %{format}".fmt(attr = attr_name, format = format))
     return format
 
 def _infer_output(name, to_format):
@@ -99,9 +99,9 @@ def _infer_output(name, to_format):
     return name + "." + ext
 
 def pandoc(**kwargs):
-    if "from_format" in kwargs:
-        _check_format(kwargs["from_format"], "from_format")
     if "output" not in kwargs:
+        if "to_format" not in kwargs:
+            fail("One of `output` or `to_format` attributes must be provided")
         to_format = _check_format(kwargs["to_format"], "to_format")
         kwargs["output"] = _infer_output(kwargs["name"], to_format)
     _pandoc(**kwargs)

@@ -1,19 +1,5 @@
 load("//:pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
 
-# Simplest possible example, where the to_format is specified
-pandoc(
-    name = "readme1",
-    src = "//:README.md",
-    to_format = "asciidoc",
-)
-
-# Simplest possible example, where the output is specified
-pandoc(
-    name = "readme2",
-    src = "//:README.md",
-    output = "readme2.html",
-)
-
 # Conversion of README to various formats for testing.
 [pandoc(
     name = "readme_" + fmt,
@@ -21,3 +7,11 @@ pandoc(
     from_format = "markdown",
     to_format = fmt,
 ) for fmt in PANDOC_EXTENSIONS.keys()]
+
+# You can also specify the output, the format is then inferred from the extension,
+# and the rule name is not used.
+pandoc(
+    name = "gen_html_page",
+    src = "//:README.md",
+    output = "index.html",
+)
