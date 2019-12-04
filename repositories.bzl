@@ -37,7 +37,6 @@ def pandoc_repositories():
         name = "pandoc_bin_windows-i386",
         build_file_content = BUILD_CONTENT_WINDOWS,
         sha256 = "c1530b141bd98903fa0f3d242076d790ce9d7448e8fc24f5084967c0889238d6",
-        strip_prefix = "pandoc-{v}-windows-i386".format(v = PANDOC_VERSION),
         url = "https://github.com/jgm/pandoc/releases/download/{v}/pandoc-{v}-windows-i386.zip".format(v = PANDOC_VERSION),
     )
 
@@ -45,7 +44,6 @@ def pandoc_repositories():
         name = "pandoc_bin_windows-x86_64",
         build_file_content = BUILD_CONTENT_WINDOWS,
         sha256 = "ce9f8a68b9bccbec63d35317dfdc40dc3e1722d49b66b9cf39cc1459ae688129",
-        strip_prefix = "pandoc-{v}-windows-x86_64".format(v = PANDOC_VERSION),
         url = "https://github.com/jgm/pandoc/releases/download/{v}/pandoc-{v}-windows-x86_64.zip".format(v = PANDOC_VERSION),
     )
 
