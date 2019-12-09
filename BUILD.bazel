@@ -15,7 +15,7 @@ pandoc_toolchain(
         "@bazel_tools//platforms:linux",
         "@bazel_tools//platforms:x86_64",
     ],
-    platform = "linux",
+    platform = "linux-x86_64",
 )
 
 pandoc_toolchain(
