@@ -77,7 +77,7 @@ _pandoc = rule(
         "from_format": attr.string(),
         "options": attr.string_list(),
         "src": attr.label(allow_single_file = True, mandatory = True),
-	"css": attr.label(allow_single_file = True, mandatory = False),
+        "css": attr.label(allow_single_file = True, mandatory = False),
         "to_format": attr.string(),
         "output": attr.output(mandatory = True),
     },
