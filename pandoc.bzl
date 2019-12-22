@@ -57,6 +57,8 @@ def _pandoc_impl(ctx):
         cli_args.extend(["--from", ctx.attr.from_format])
     if ctx.attr.to_format:
         cli_args.extend(["--to", ctx.attr.to_format])
+        if ctx.attr.css and PANDOC_EXTENSIONS[ctx.attr.to_format] == "html":
+            cli_args.extend(["-css", ctx.file.css.path])
     cli_args.extend(["-o", ctx.outputs.output.path])
     cli_args.extend([ctx.file.src.path])
     ctx.actions.run(
@@ -64,7 +66,7 @@ def _pandoc_impl(ctx):
         executable = toolchain.pandoc.files.to_list()[0].path,
         arguments = cli_args,
         inputs = depset(
-            direct = ctx.files.src,
+            direct = ctx.files.src + ctx.files.css,
             transitive = [toolchain.pandoc.files],
         ),
         outputs = [ctx.outputs.output],
@@ -75,6 +77,7 @@ _pandoc = rule(
         "from_format": attr.string(),
         "options": attr.string_list(),
         "src": attr.label(allow_single_file = True, mandatory = True),
+	"css": attr.label(allow_single_file = True, mandatory = False),
         "to_format": attr.string(),
         "output": attr.output(mandatory = True),
     },

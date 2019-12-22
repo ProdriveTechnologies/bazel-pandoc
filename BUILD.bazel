@@ -2,6 +2,7 @@ load(":toolchain.bzl", "pandoc_toolchain")
 load(":pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
 
 exports_files(["README.md"])
+exports_files(["stylesheet.css"])
 
 # Precompiled Pandoc binaries provided by upstream.
 

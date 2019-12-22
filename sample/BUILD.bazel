@@ -4,6 +4,7 @@ load("//:pandoc.bzl", "PANDOC_EXTENSIONS", "pandoc")
 [pandoc(
     name = "readme_" + fmt,
     src = "//:README.md",
+    css = "//:stylesheet.css",
     from_format = "markdown",
     to_format = fmt,
 ) for fmt in PANDOC_EXTENSIONS.keys()]
